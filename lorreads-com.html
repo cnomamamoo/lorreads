@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>LorReads</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(238,174,202,0.24) 60%, rgba(148,187,233,0.22) 100%);
+    font-family: 'Quicksand', Arial, sans-serif;
+    min-height: 100vh;
+    position: relative;
+}
+.navbar {
+    background: #fff7f5cc;
+    backdrop-filter: blur(2px);
+    padding: 20px 44px;
+    border-bottom: 2px solid #e9c9df;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.navbar .logo {
+    font-size: 33px;
+    font-family: 'Dancing Script', cursive;
+    color: #ac6bae;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+.navbar nav a, .navbar nav label {
+    color: #ac6bae;
+    text-decoration: none;
+    margin-left: 36px;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Quicksand', Arial, sans-serif;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+.navbar nav a:hover, .navbar nav label:hover {
+    color: #88b795;
+}
+.search {
+    background: #fff;
+    border: 1px solid #e4c6d2;
+    border-radius: 18px;
+    padding: 8px 22px;
+    color: #ac6bae;
+    font-size: 1em;
+    font-family: 'Quicksand', Arial, sans-serif;
+}
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding-bottom: 40px;
+}
+.slogan {
+    font-family: 'Dancing Script', cursive;
+    text-align: center;
+    color: #84588c;
+    font-size: 2em;
+    margin-bottom: 25px;
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+.section-title {
+    font-size: 30px;
+    font-family: 'Dancing Script', cursive;
+    color: #ac6bae;
+    margin-bottom: 15px;
+}
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 26px;
+}
+.book-card {
+    background: #fff9fc;
+    border-radius: 18px;
+    border: 2px solid #e9c9df;
+    padding: 13px 13px 14px 13px;
+    width: 180px;
+    box-shadow: 0 2px 14px rgba(150,120,150,0.07);
+    transition: transform 0.18s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+.book-card:hover {
+    transform: translateY(-7px) scale(1.035);
+    box-shadow: 0 8px 30px rgba(150,120,150,0.15);
+}
+.book-card img {
+    width: 180px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 13px;
+    box-shadow: 0 2px 12px rgba(150,120,150,0.06);
+    border: 1px solid #fad9ea;
+    background: #fffaf4;
+}
+.book-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #84588c;
+    margin: 10px 0 4px 0;
+    font-family: 'Quicksand', Arial, sans-serif;
+}
+.book-title a {
+    color: #84588c;            
+    text-decoration: none;     
+    font-weight: bold;
+    transition: color 0.2s;
+}
+.book-title a:hover {
+    color: #ac6bae;           
+    text-decoration: underline;
+}
+.book {
+    font-size: 13px;
+    color: #e19ab7;
+    font-family: 'Quicksand', Arial, sans-serif;
+}
+.stars {
+    color: gold;
+    font-size: 14px;
+}
+.flower-icon {
+    position: absolute;
+    top: 10px; right: 12px;
+    font-size: 22px;
+    opacity: 0.5;
+}
+
+/* MODAL STYLES (CSS ONLY MODAL) */
+#book-request-modal {
+    display: none;
+}
+#book-request-modal:checked ~ .custom-modal {
+    display: flex;
+}
+.custom-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left:0; top:0; right:0; bottom:0;
+    background: rgba(70,30,90,0.15);
+    align-items: center;
+    justify-content: center;
+}
+.custom-modal-dialog {
+    background: #fff9fc;
+    border: 2px solid #e9c9df;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 36px rgba(150,120,200,0.13);
+    min-width: 0;
+    width: 96vw;
+    position: relative;
+    max-width: 400px;
+    /* Add this! */
+    box-sizing: border-box;
+}
+.custom-modal-dialog input,
+.custom-modal-dialog button {
+    box-sizing: border-box;
+}
+.custom-modal-close {
+    position: absolute;
+    right: 18px;
+    top: 10px;
+    font-size: 2.1em;
+    color: #b39edc;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 1;
+    background: none;
+    border: none;
+}
+.custom-modal-dialog h2 {
+    color: #ac6bae;
+    margin-bottom: 14px;
+    font-family: 'Dancing Script', cursive;
+    text-align: center;
+}
+.form-group {
+    margin-bottom: 15px;
+    font-family: 'Quicksand', Arial, sans-serif;
+}
+.form-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+}
+.custom-modal-dialog input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 7px;
+    border: 1px solid #e9c9df;
+    margin-bottom: 2px;
+    font-family: inherit;
+    font-size: 1em;
+}
+.custom-modal-dialog button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #ffb7ce 0%, #c1dbb3 100%);
+    color: #674d6b;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+    font-size: 1.04em;
+    margin-top: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.custom-modal-dialog button[type="submit"]:hover {
+    background: linear-gradient(90deg,#acdfee 0%,#c1dbb3 100%);
+}
+@media (max-width: 450px) {
+    .custom-modal-dialog {
+        max-width: 120vw;
+        padding: 25px;
+    }
+}
+</style>
+</head>
+<body>
+
+
+<input type="checkbox" id="book-request-modal" style="display:none;">
+<div class="navbar">
+    <span class="logo">🌸 LorReads</span>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">All Manhwas</a>
+        <label for="book-request-modal" style="cursor:pointer;">Book Request~!</label>
+    </nav>
+    <input class="search" type="text" placeholder="Search manhwas..."/>
+</div>
+
+<div class="custom-modal">
+    <div class="custom-modal-dialog">
+      <label for="book-request-modal" class="custom-modal-close">&times;</label>
+      <h2>Book Request</h2>
+      <form action="thankyou.html" method="get">
+        <div class="form-group">
+          <label>Name: <span style="color:red">*</span></label>
+          <input type="text" required>
+        </div>
+        <div class="form-group">
+          <label>Email: <span style="color:red">*</span></label>
+          <input type="email" required>
+        </div>
+        <div class="form-group">
+          <label>Book: <span style="color:red">*</span></label>
+          <input type="text" required>
+        </div>
+        <div class="form-group">
+          <label>Name of the author: <span style="color:red">*</span></label>
+          <input type="text" required>
+        </div>
+        <div class="form-group">
+          <label>Publisher: <span style="color:red">*</span></label>
+          <input type="text" required>
+        </div>
+        <button type="submit">Submit Request</button>
+      </form>
+    </div>
+  </div>
+  </div>
+</div>
+<div class="container">
+    <div class="slogan">Find your favorite manhwas for free</div>
+    <div class="section-title">🌷 Popular Today</div>
+    <div class="grid">
+        <div class="book-card">
+            <span class="flower-icon">🌺</span>
+            <img src="https://us-a.tapas.io/sa/06/e308503c-2085-4ff7-8de1-a49878a7c488_z.jpg" alt="book 1">
+            <div class="book-title"><a href="https://kaiscans.org/manga/into-the-light-once-again/">Into the Light Once Again</a></div>
+            <div class="book">Author: Tikatika</div>
+            <div class="book">Illustrator: Yuya</div>
+            <div class="book">Status: Ongoing</div>
+            <div class="book">Genre: Fantasy, Romance</div>
+            <div class="stars">★ ★ ★ ★ ★ 5.0</div>
+        </div>
+        <div class="book-card">
+            <span class="flower-icon">🌹</span>
+            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1694221108i/198819922.jpg" alt="book 2">
+            <div class="book-title"><a href="https://kaiscans.org/manga/death-is-the-only-ending-for-the-villainess/">Villains are Destined to Die</a></div>
+            <div class="book">Author: Gwon Gyeoeul (권겨을)</div>
+            <div class="book">Illustrator: SUOL</div>
+            <div class="book">Status: Ongoing</div>
+            <div class="book">Genre: Fantasy, Romance, Isekai</div>
+            <div class="stars">★ ★ ★ ★ ★ 5.0</div>
+        </div>
+        <div class="book-card">
+            <span class="flower-icon">🌼</span>
+            <img src="https://stitchmediamix.com/wp-content/uploads/2023/06/doctorelise.jpg" alt="book 3">
+            <div class="book-title"> <a href="https://bato.to/series/72315/doctor-elise-the-royal-lady-with-the-lamp">Doctor Elise: The Royal Lady with the Lamp</a></div>
+            <div class="book">Author: Plutus</div>
+            <div class="book">Illustrator: Spoon</div>
+            <div class="book">Status: Completed (September 2017 - February 2021)</div>
+            <div class="book">Genre: Fantasy, Romance, Isekai</div>
+            <div class="stars">★ ★ ★ ★ ★ 5.0</div>
+        </div>
+        <div class="book-card">
+            <span class="flower-icon">🦋</span>
+            <img src="https://us-a.tapas.io/sa/3a/ebf3a87c-520a-40a7-aca3-d88625671a65_z.jpg" alt="book 4">
+            <div class="book-title"><a href="https://bato.to/series/93302/kill-the-villainess-official">Kill the Villainess</a></div>
+            <div class="book">Author: Sawol Saeng</div>
+            <div class="book">Illustrator: Haegi</div>
+            <div class="book">Status: Completed (April 2021 - January 2024)</div>
+            <div class="book">Genre: Fantasy, Romance, Isekai</div>
+            <div class="stars">★ ★ ★ ★ ★ 5.0</div>
+        </div>
+        <div class="book-card">
+            <span class="flower-icon">🥀</span>
+            <img src="https://preview.redd.it/unpopular-opinion-my-in-laws-are-obsessed-with-me-v0-kty47kjsxhpc1.jpeg?auto=webp&s=3268337c00422d12bb0abb86bd409971c6e32c30" alt="book 5">
+                        <div class="book-title"><a href="https://coffeemanga.io/manga/my-in-laws-are-obsessed-with-me-online-reading-30/">My In-Laws are Obsessed With Me</a></div>
+                        <div class="book">Author: Han Yoon-seol (한윤설)</div>
+                        <div class="book">Illustrator: Seungu (승우)</div>
+                        <div class="book">Status: Ongoing</div>
+                        <div class="book">Genre: Fantasy, Romance</div>
+                        <div class="stars">★ ★ ★ ★ ★ 5.0</div>
+                        </div>
